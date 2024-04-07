@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>OrderID: {{ order.id }} </h1>
+
+{% for item in order.items %}
+
+    <p>
+        <span style="margin-right: 20px;"> Product: {{ item.product.name }} </span>
+        <span style="margin-right: 20px;"> Price: {{ "%.2f"|format(item.product.price) }} </span>
+        {% if order.processed %}
+            <span> Quantity: {{ item.quantity }} </span>
+        {% else %}
+            {% if item.quantity > item.product.availability %}
+                <span style="color: red;"> Quantity: {{ item.quantity }} </span>
+            {% else %}
+                <span style="color: green;"> Quantity: {{ item.quantity }} </span>
+            {% endif %}
+        {% endif %}
+    </p>
+
+{% endfor %}
+
+<br>
+<span> Total: {{ "%.2f"|format(total) }} </span>
+<div style="display: flex; margin-top: 30px;">
+    <form method="POST" action="{{ url_for('delete_order', order_id=order.id) }}" style="margin-right: 100px;">
+        <button id="dltBnt" type="submit"
+        style="align-items: center;
+        background-color: #fff;
+        border: 2px solid #000;
+        box-sizing: border-box;
+        color: #000;
+        cursor: pointer;
+        display: inline-flex;
+        fill: #000;
+        font-family: Inter,sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        height: 35px;
+        justify-content: center;
+        letter-spacing: -.8px;
+        line-height: 24px;
+        min-width: 100px;
+        outline: 0;
+        padding: 0 17px;
+        text-align: center;
+        text-decoration: none;
+        transition: all .3s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;">Delete</button> 
+    </form>
+
+    <form method="POST" action="{{ url_for('api_order_id.process_order_no_json', order_id=order.id) }}">
+        <!-- "api_order_id" is name of the Blueprint (take a look at api_orders.py) -->
+        <button id="prcBnt" type="submit"
+        style="align-items: center;
+        background-color: #fff;
+        border: 2px solid #000;
+        box-sizing: border-box;
+        color: #000;
+        cursor: pointer;
+        display: inline-flex;
+        fill: #000;
+        font-family: Inter,sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        height: 35px;
+        justify-content: center;
+        letter-spacing: -.8px;
+        line-height: 24px;
+        min-width: 100px;
+        outline: 0;
+        padding: 0 17px;
+        text-align: center;
+        text-decoration: none;
+        transition: all .3s;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;">Process</button> 
+    </form>
+
+    {% if order.processed != None %}
+        <script>
+            let dltBnt = document.getElementById("dltBnt")
+            dltBnt.setAttribute("disabled", "disabled")
+            dltBnt.style.opacity = 0.5
+            let prcBnt = document.getElementById("prcBnt")
+            prcBnt.setAttribute("disabled", "disabled")
+            prcBnt.style.opacity = 0.5
+        </script>
+    {% endif %}
+    
+</div>
+{% endblock %}

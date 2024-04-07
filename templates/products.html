@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Products</h1>
+{% for product in products %}
+<p>
+    <span style="margin-right: 20px;">Name: {{ product.name }}</span>
+    <span style="margin-right: 20px;">Price: {{ "%.2f"|format(product.price) }}</span>
+    {% if product.availability == 10 %}
+        <span style="color: green;"> Availability: {{ product.availability }} </span>
+    {% elif product.availability > 0 %}
+        <span style="color: #A68A10;"> Availability: {{ product.availability }} </span>
+    {% else %}
+        <span style="color: red;"> Availability: {{ product.availability }} </span>
+    {% endif %}
+</p>
+{% endfor %}
+{% endblock %}

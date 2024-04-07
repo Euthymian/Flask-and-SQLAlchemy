@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Customers</h1>
+{% for customer in customers %}
+<p>
+    <span style="margin-right: 20px;"> Name: <a href="{{ url_for('customer_order_infor', customer_id=customer.id) }}"> {{ customer.name }} </a> </span>
+    <span style="margin-right: 20px;"> Phone: {{ customer.phone }}</span>
+    {% if customer.balance == 100 %}
+        <span style="color: green;"> Balance: {{ "%.2f"|format(customer.balance) }}</span>
+    {% elif customer.balance > 0 %}
+        <span style="color: #A68A10;"> Balance: {{ "%.2f"|format(customer.balance) }}</span>
+    {% else %}
+        <span style="color: red;"> Balance: {{ "%.2f"|format(customer.balance) }}</span>
+    {% endif %}
+</p>
+{% endfor %}
+{% endblock %}
