@@ -4,7 +4,7 @@
 This project is designed to convert data into SQL format then use SQL to perform simple tasks of an COM (Customer Order Management) system.
 
 ## Installation
-To use this project, you will need to install the following libraries:
+To run this project, you will need to install the following libraries:
 
 - Flask `pip install flask`
 - Flask-SQLAlchemy `pip install flask-sqlalchemy`
